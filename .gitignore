@@ -1,0 +1,9 @@
+#ignore the AutoPCH
+/.vs/
+
+#ignore src all .db .cvs .txt .bmp .raw
+/src/*.db
+/src/*.txt
+/src/*.csv
+/src/*.bmp
+/src/*.raw

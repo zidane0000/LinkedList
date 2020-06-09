@@ -47,8 +47,6 @@ public:
     void Push_front(ListNode* newNode);     // 在list的開頭新增node
     void Push_back(ListNode* newNode);      // 在list的尾巴新增node
     void Clear();               // 把整串list刪除
-    void resume();
-    void pause();
     ListNode* getFirst() { return first; };
     ListNode* getLast() { return last; };
     ListNode* getNodeByName(std::string NodeName);
@@ -61,4 +59,7 @@ private:
     ListNode* last;             // list的最後一個node
     
     int node_posi = 0;          //現在運行到哪裡
+    bool ThreadisPass = false;
+
+    std::map<std::string, ListNode*> HW_map;
 };

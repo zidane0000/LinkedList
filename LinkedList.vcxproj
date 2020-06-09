@@ -142,6 +142,7 @@
     <ClInclude Include="src\EX_Base.h" />
     <ClInclude Include="src\HW_Base.h" />
     <ClInclude Include="src\LinkedList.h" />
+    <ClInclude Include="src\SimpleListNodeFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ALGO_Base.cpp" />
