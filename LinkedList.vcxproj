@@ -145,6 +145,7 @@
     <ClInclude Include="src\SimpleListNodeFactory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\algorithm.cpp" />
     <ClCompile Include="src\ALGO_Base.cpp" />
     <ClCompile Include="src\EX_Base.cpp" />
     <ClCompile Include="src\HW_Base.cpp" />
