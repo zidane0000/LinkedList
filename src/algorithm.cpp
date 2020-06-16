@@ -56,10 +56,34 @@ void Fibonacci(std::vector<int> vec_int, int& value_max, int& posi_max) {
 		Fib_array.push_back(Fib_b);
 	}
 
-	for (auto posi : Fib_array) {
+	//從n-2的位置開始
+	Fib_array.pop_back();
+	Fib_array.pop_back();
+
+	//顛倒array，以利後續auto取值
+	std::reverse(Fib_array.begin(), Fib_array.end());
+	bool dircetion = false;		//方向是否向負
+	bool delta_symbol = true;	//前後MTF差之符號(+或-)
+	int before_sharpness = 0;
+
+	int posi = 0;
+	for (auto array_value : Fib_array) {
+		if (dircetion) {
+			array_value = -array_value;
+		}
+
+		posi += array_value;
+
 		if (vec_int.at(posi) > value_max) {
 			value_max = vec_int.at(posi);
 			posi_max = posi;
 		}
+
+		//前後兩點差值為delta S，若delta S產生變號，則開始反向搜尋
+		if (((vec_int.at(posi) - before_sharpness) > 0) != delta_symbol) {
+			dircetion = !dircetion;
+		}
+		delta_symbol = (vec_int.at(posi) - before_sharpness) > 0 ? true : false;
+		before_sharpness = vec_int.at(posi);
 	}
 }
