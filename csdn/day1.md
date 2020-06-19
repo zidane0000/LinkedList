@@ -1,8 +1,8 @@
-@[TOC](以C++實現DDEPM之路[1])
+# 以C++實現DDEPM之路[1]
 
 程式碼參考DDEPM实例 : [https://blog.csdn.net/qq_24548569/article/details/85838201](https://blog.csdn.net/qq_24548569/article/details/85838201)
 
-# 開始
+## 開始
 - **X_row = [-self.x1[i+1], -self.x1[i]]** 解讀
 令一結構 
 
@@ -23,7 +23,7 @@ X_row.push_back(Double_int(vec_AGO.at(i), vec_AGO.at(i + 1)));
 - 第一天先這樣，紀錄一下自己用C++實現DDEPM的過程
 	
 
-## 參考
+### 參考
 
 > https://blog.csdn.net/qq_24548569/article/details/85838201
 > http://rportal.lib.ntnu.edu.tw/bitstream/20.500.12235/96972/3/300803.pdf
