@@ -36,3 +36,9 @@ Basic LinkedList , ListNode and Factory
 - Hill_Climbing
 - Simulated_Annealing
 - Fibonacci
+- Matrix Mutiply
+- Matrix determinant
+- Matrix getCofactor
+- adjoint Matrix
+- inverse Matrix
+- transpose Matrix
