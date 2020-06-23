@@ -18,7 +18,7 @@ X_row.push_back(Double_int(vec_AGO.at(i), vec_AGO.at(i + 1)));
 2. **np.linalg.pinv(X.T.dot(X)).dot(X.T).dot(Y)** 解讀
 	- pinv是求偽逆矩陣(Pseudo Inverser Matrix)
 	  - 若矩陣滿秩，則 pinv(矩陣) = inv(矩陣)，即偽逆矩陣等於逆矩陣
-	  - $\pinv(A)=A^T(AA^T)^{-1}$
+	  - ![pinv(A)=A^T(AA^T)^{-1}](https://bit.ly/3fNWnIH)
 	- X.T是X的轉置矩陣
 	- X.T.dot(X)是X.T 相乘 X
 
@@ -27,4 +27,5 @@ X_row.push_back(Double_int(vec_AGO.at(i), vec_AGO.at(i + 1)));
 ### 參考
 
 > https://blog.csdn.net/qq_24548569/article/details/85838201
+
 > http://rportal.lib.ntnu.edu.tw/bitstream/20.500.12235/96972/3/300803.pdf
