@@ -248,8 +248,10 @@ bool Inverse_matrix(std::vector<std::vector<float>>matrix, std::vector<std::vect
 {
 	int n = matrix.size();
 	float det = determinantOfMatrix(matrix, n);
-	if (det == 0)
+	if (det == 0) {
+		std::cout << "determinant is 0 , return." << std::endl;
 		return false;
+	}
 
 	std::vector<std::vector<float>>adj_matrix;
 	ADJ_matrix(matrix, matrix.size(), adj_matrix);
@@ -266,9 +268,6 @@ bool Inverse_matrix(std::vector<std::vector<float>>matrix, std::vector<std::vect
 std::vector<std::vector<float>> transpose_matrix(std::vector<std::vector<float>>matrix) 
 {
 	int row = matrix.size();
-	if (row < 1)
-		return;
-
 	int col = matrix.at(0).size();
 	std::vector<std::vector<float>> transpose_mat = std::vector<std::vector<float>>(col, std::vector<float>(row, 0));
 
@@ -279,38 +278,89 @@ std::vector<std::vector<float>> transpose_matrix(std::vector<std::vector<float>>
 	return transpose_mat;
 }
 
-//typedef std::pair<int, int> Double_int;
+//(Moore-Penrose) pseudo inverse matrix
+bool Pseudo_Inverse_Matrix(std::vector<std::vector<float>> matrix, std::vector<std::vector<float>>& pim)
+{
+	// M+ = (M.T.dot(M))^(-1).dot(M.T)
+	std::vector<std::vector<float>> MT = transpose_matrix(matrix);
+
+	std::vector<std::vector<float>> MT_dotM;
+	if (!MutipleWithoutAMP(MT, matrix, MT_dotM))
+		return false;
+
+	std::vector<std::vector<float>> inv_MT_dotM;
+	if (!Inverse_matrix(MT_dotM, inv_MT_dotM))
+		return false;
+
+	if (!MutipleWithoutAMP(inv_MT_dotM, MT, pim))
+		return false;
+
+	return true;
+}
+
 //離散差分方程 https://blog.csdn.net/qq_24548569/article/details/85838201
-//void DDEPM(std::vector<int> vec_sharpness) {
-//	if (vec_sharpness.size() < 3) {
-//		std::cout << "the length of sequence is less than 3" << std::endl;
-//		return;
-//	}
-//
-//	//累加生成運算 Accumulated Generating Operation
-//	std::vector<int> vec_AGO;
-//	int xi = 0;
-//	for (auto i : vec_sharpness) {
-//		xi += i;
-//		vec_AGO.push_back(xi);
-//	}
-//	
-//	//DDE(2,1) 二接離散差分方程式
-//	std::vector<Double_int> X;
-//	std::vector<int> Y;
-//
-//	for (int i = 0; i < vec_AGO.size() - 2; i++) {
-//		X.push_back(Double_int(vec_AGO.at(i), vec_AGO.at(i + 1)));
-//		Y.push_back(vec_AGO.at(i + 2));
-//	}
-//		for i in range(len(self.x1) - 2) :
-//			X_row = [-self.x1[i + 1], -self.x1[i]]
-//			X.append(X_row)
-//			Y.append(self.x1[i + 2])
-//			X = np.array(X)
-//			Y = np.array(Y).reshape(-1, 1)
-//
-//			phi = np.linalg.pinv(X.T.dot(X)).dot(X.T).dot(Y)
-//			self.a = phi[0, 0]
-//			self.b = phi[1, 0]
-//}
+class DDEPM {
+public:
+	DDEPM();
+	~DDEPM();
+
+	bool InitDDEPM(std::vector<float> vec_sharpness);
+};
+
+bool DDEPM::InitDDEPM(std::vector<float> vec_sharpness)
+{
+	if (vec_sharpness.size() < 3) {
+		std::cout << "the length of sequence is less than 3" << std::endl;
+		return false;
+	}
+
+	//累加生成運算 Accumulated Generating Operation
+	std::vector<int> vec_AGO;
+	int xi = 0;
+	for (auto i : vec_sharpness) {
+		xi += i;
+		vec_AGO.push_back(xi);
+	}
+
+	//DDE(2,1) 二接離散差分方程式
+	std::vector<std::vector<float>> X;
+	std::vector<std::vector<float>> Y;
+
+	for (int i = 0; i < vec_AGO.size() - 2; i++) {
+		std::vector<float> X_tmp;
+		X_tmp.push_back(vec_AGO.at(i));
+		X_tmp.push_back(vec_AGO.at(i + 1));
+		X.push_back(X_tmp);
+
+		std::vector<float> Y_tmp;
+		Y_tmp.push_back(vec_AGO.at(i + 2));
+		Y.push_back(Y_tmp);
+	}
+
+	//python code : np.linalg.pinv(X.T.dot(X)).dot(X.T).dot(Y)
+	//X.T
+	std::vector<std::vector<float>> XT = transpose_matrix(X);
+
+	//X.T.dot(X)
+	std::vector<std::vector<float>> XT_dotX;
+	if (!MutipleWithAMP(XT, X, XT_dotX))
+		return false;
+
+	//np.linalg.pinv(X.T.dot(X)) = pim
+	std::vector<std::vector<float>> pim;
+	if (!Pseudo_Inverse_Matrix(XT_dotX, pim))
+		return false;
+
+	//pim.dot(X.T)
+	std::vector<std::vector<float>> pim_dotXT;
+	if (!MutipleWithAMP(pim, XT, pim_dotXT)) 
+		return false;
+
+	//pim.dot(X.T).dot(Y) = phi
+	std::vector<std::vector<float>> phi;
+	if (!MutipleWithAMP(pim_dotXT, Y, phi))
+		return false;
+
+	float a = phi[0][0];
+	float b = phi[1][0];
+}
