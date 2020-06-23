@@ -42,3 +42,8 @@ Basic LinkedList , ListNode and Factory
 - adjoint Matrix
 - inverse Matrix
 - transpose Matrix
+- pseudo Inverse Matrix
+
+## 以C++實作Discrete Difference Equation Prediction Model
+- [Day1](https://github.com/zidane0000/LinkedList/blob/master/markdown/day1.md)
+- [Day2](https://github.com/zidane0000/LinkedList/blob/master/markdown/day2.md)
