@@ -55,6 +55,7 @@ bool Pseudo_Inverse_Matrix(std::vector<std::vector<float>> matrix, std::vector<s
 下次見
 
 ### 參考
+
 > https://www.geeksforgeeks.org/adjoint-inverse-matrix/
 > https://docs.microsoft.com/zh-tw/cpp/parallel/amp/walkthrough-matrix-multiplication?view=vs-2019
 > https://fractalytics.io/moore-penrose-matrix-optimization-cuda-c 程式有誤，僅供參考!!!
