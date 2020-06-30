@@ -43,7 +43,9 @@ Basic LinkedList , ListNode and Factory
 - inverse Matrix
 - transpose Matrix
 - pseudo Inverse Matrix
+- class DDEPM 
 
 ## 以C++實作Discrete Difference Equation Prediction Model
 - [Day1](https://github.com/zidane0000/LinkedList/blob/master/markdown/day1.md)
 - [Day2](https://github.com/zidane0000/LinkedList/blob/master/markdown/day2.md)
+- [Day3](https://github.com/zidane0000/LinkedList/blob/master/markdown/day3.md)
