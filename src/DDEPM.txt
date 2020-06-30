@@ -1,0 +1,72 @@
+import numpy as np
+import scipy.linalg
+sequence = [7,8,19,40,53]
+if len(sequence) < 3:
+  raise "the length of sequence is less than 3"
+x0 = sequence
+# AGO
+xi = 0
+x1 = []
+for i in x0:
+    xi += i
+    x1.append(xi)
+    
+# DDE(2, 1)
+X = []
+Y = []
+for i in range(len(x1)-2):
+    X_row = [-x1[i+1], -x1[i]]
+    X.append(X_row)
+    Y.append(x1[i+2])
+X = np.array(X)
+Y = np.array(Y).reshape(-1, 1)
+
+print("Y=",Y)
+print("XT_dotX = ",X.T.dot(X)[0][0])
+print("XT_dotX = ",X.T.dot(X))
+u,s,vh = np.linalg.svd(X.T.dot(X))
+u2,s2,vh2=scipy.linalg.svd(X.T.dot(X))
+print("u = ",u)
+print("vh = ",vh)
+print("s = ",s)
+print("u2 = ",u2)
+print("vh2 = ",vh2)
+print("s2 = ",s2)
+print("pinv = ",np.linalg.pinv(X.T.dot(X)))
+phi = np.linalg.pinv(X.T.dot(X)).dot(X.T).dot(Y)
+a = phi[0, 0]
+b = phi[1, 0]
+print("a = ",a)
+print("b = ",b)
+
+delta = a ** 2 - 4 * b
+print("delta = ",delta)
+if delta > 0:
+    type = 0
+    
+    r1 = (-a + np.sqrt(delta)) / 2
+    r2 = (-a - np.sqrt(delta)) / 2
+    
+    C1 = (r1 * x0[0] - x0[0] - x0[1]) / (r1 * r2 - r2 * r2)
+    C2 = (r2 * x0[0] - x0[0] - x0[1]) / (r1 * r2 - r1 * r1)
+elif delta == 0:
+    type = 1
+    
+    r1 = -a / 2
+    r2 = r1
+    
+    C1 = (x0[0] * (2 * r1 - 1) - x0[1]) / (r1 * r1)
+    C2 = (x0[0] * (1 - r1) + x0[1]) / (r1 * r1)
+else:
+    type = 2
+    
+    r1 = (-a + np.sqrt(-delta) * 1j) / 2
+    print("r1 = ", r1)
+    r2 = (-a - np.sqrt(-delta) * 1j) / 2
+    print("r2 = ", r2)
+
+    rho = np.sqrt(b)
+    phi = np.arctan(-np.sqrt(4 * b - a ** 2) / a)
+    
+    C1 = (x0[0] * rho * rho * np.cos(2 * phi) - x0[0] * rho * np.cos(phi) - x0[1] * rho * np.cos(phi)) / (rho ** 3 * (np.sin(phi) * np.cos(2 * phi) - np.cos(phi) * np.sin(2 * phi)))
+    C2 = (x0[0] * rho * np.sin(phi) - x0[1] * rho * np.sin(phi) - x0[1] * rho * rho * np.sin(2 * phi)) / (rho ** 3 * (np.sin(phi) * np.cos(2 * phi) - np.cos(phi) * np.sin(2 * phi)))
