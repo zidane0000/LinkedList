@@ -9,10 +9,11 @@
 
 - 實驗後發現，在特定情況下，參考文獻與python上的svd之結果會有不同
 - 特定情況為當InitDDEPM時vec_sharpness的size大於3，則結果svd計算出來的U以及V會不同(數字一樣，正負號有差異)
-- 經多方查詢svd計算方法發現，共五個(連結已放在參考)，前三個為c library，結果大致相同，後兩個為python library，結果與前三個相異
+- 經多方查詢svd計算方法發現，共六個(連結已放在參考)，第一個為純數學，二至四為c library，前四個結果大致相同，最後兩個為python library，結果與前三個相異
 - 實驗可以矩陣A[[9857,3131],[3131,1470]]為例，矩陣A以vec_sharpness[7,8,19,40,53]生成
 - python code 在 https://github.com/zidane0000/LinkedList/blob/master/src/DDEPM.txt
 - python online IDE 使用 https://repl.it/languages/python3
+- 結論為相信前四個參考
 
 ```cpp
 bool dsvd(std::vector<std::vector<float>>& a, int m, int n, std::vector<std::vector<float>>& w, std::vector<std::vector<float>>& v)
@@ -36,6 +37,8 @@ private:
 ```
 
 ### 參考
+
+> https://atozmath.com/MatrixEv.aspx?q=svd
 
 > http://svn.lirec.eu/libs/magicsquares/src/SVD.cpp
 
